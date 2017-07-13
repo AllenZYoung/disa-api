@@ -1,0 +1,32 @@
+uri: 'mongodb://ds049624.mlab.com:49624/coledev'
+username: DISA_USERNAME
+password: DISA_PASSWORD
+routes:
+  - /entries:
+      method: GET
+      collection: new_entries
+      filter: ~
+      subroute: _id
+  - /entries/draft:
+      collection: new_entries
+      filter:
+        - meta.stage: Draft
+  - /entries/internal:
+      collection: new_entries
+      filter:
+        - meta.stage: Internal
+  - /entries/public:
+      collection: new_entries
+      filter:
+        - meta.stage: Public
+  - /entries:
+      method: POST
+      collection: new_entries
+      prepost: '../../autoIncrementId.js'
+  - /entries:
+      method: PUT
+      collection: new_entries
+  - /options:
+      method: GET
+      collection: options
+      filter: ~

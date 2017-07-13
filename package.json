@@ -1,0 +1,10 @@
+{
+  "name": "disa-api",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "Cole Hansen <cole_hansen@brown.edu>",
+  "license": "MIT",
+  "dependencies": {
+    "declarest-mongo": "^0.0.4"
+  }
+}
