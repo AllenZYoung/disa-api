@@ -5,6 +5,7 @@
   "author": "Cole Hansen <cole_hansen@brown.edu>",
   "license": "MIT",
   "dependencies": {
-    "declarest-mongo": "^0.0.4"
+    "declarest-mongo": "^0.0.4",
+    "google-auth-library": "^0.10.0"
   }
 }

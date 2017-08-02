@@ -1,4 +1,4 @@
-uri: 'mongodb://ds049624.mlab.com:49624/coledev'
+uri: 'mongodb://ds021333.mlab.com:21333/temporary-disa'
 username: DISA_USERNAME
 password: DISA_PASSWORD
 routes:
@@ -7,10 +7,6 @@ routes:
       collection: new_entries
       filter: ~
       subroute: _id
-  - /entries/draft:
-      collection: new_entries
-      filter:
-        - meta.stage: Draft
   - /entries/internal:
       collection: new_entries
       filter:
@@ -30,3 +26,10 @@ routes:
       method: GET
       collection: options
       filter: ~
+  - /users:
+      method: GET
+      collection: users
+      filter: ~
+  - /users:
+      method: POST
+      collection: users
