@@ -1,13 +1,13 @@
 const Hapi = require('hapi');
 const Log = require('./logger.js');
 
-const db = require('./database.js');
+const mongo = require('./database.js');
 const auth = require('./auth.js');
 const entries = require('./entries.js');
 
 (function start() {
-  let database = db.then((db) => {
-    let server = initServer(Log, database, auth);
+  mongo.db.then((database) => {
+    let server = initServer(Log, mongo.client, database, auth);
 
     let routes = createRoutes(auth.routes, entries.routes);
 
@@ -23,7 +23,7 @@ const entries = require('./entries.js');
   });
 })();
 
-function initServer(logger, db, auth) {
+function initServer(logger, mongo, db, auth) {
   let server = new Hapi.Server();
   server.connection({
     host: "0.0.0.0",
@@ -33,9 +33,10 @@ function initServer(logger, db, auth) {
     }
   });
 
-  server.logger = logger;
-  server.db = db;
-  server.auth = auth;
+  server.app.logger = logger;
+  server.app.mongo = mongo;
+  server.app.db = db;
+  server.app.auth = auth;
 
   return server;
 }
@@ -53,7 +54,7 @@ function createRoutes(...routeSets) {
 function startServer(server) {
   server.start((err) => {
     if (err) {
-      console.log(err);
+      Log.error(err);
       process.exit(1);
       return;
     }
