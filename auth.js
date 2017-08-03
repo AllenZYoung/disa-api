@@ -61,7 +61,7 @@ function user(req, callback) {
   } else {
     verifyToken(token, verifyCallback, function(tokenResult) {
       if (tokenResult.error) {
-        user.error = tokenResult.error
+        user.error = tokenResult.error;
         callback(user);
         return;
       } else {
@@ -106,7 +106,7 @@ let routes = [
     handler: function(req, resp) {
       user(req, function(user) {
         if (user.error) {
-          resp(user.error).code(400);
+          resp(user).code(400);
           return;
         } else {
           resp(user).code(200);
