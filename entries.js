@@ -235,8 +235,17 @@ function updateEntry(req, resp, id) {
     }
 
     let collection = req.server.app.db.collection('entries');
+    try {
+      id = req.server.app.mongo.ObjectId(id);
+    } catch (e) {
+      Log.error(e, req);
+      resp({
+        error: "Invalid ID"
+      }).code(400);
+      return;
+    }
     collection.findOne(
-      { _id: req.server.app.mongo.ObjectId(id) }
+      { _id: id }
     )
     .then((result) => {
       if (!result) {
@@ -255,8 +264,17 @@ function updateEntry(req, resp, id) {
         body.meta.creator = result.meta.creator;
         body.meta.updatedBy = user.id;
         delete body._id;
+        try {
+          id = req.server.app.mongo.ObjectId(id);
+        } catch (e) {
+          Log.error(e, req);
+          resp({
+            error: "Invalid ID"
+          }).code(400);
+          return;
+        }
         collection.updateOne(
-          { _id: req.server.app.mongo.ObjectId(id) },
+          { _id: id },
           { $set: body }
         )
         .then((result) => {
@@ -320,9 +338,12 @@ function updateOptions(req, resp, option) {
       { upsert: true }
     )
     .then((result) => {
-      resp().code(204);
-        return;
-      })
+      resp({
+        options: body[option],
+        optionsName: option
+      }).code(200);
+      return;
+    })
     .catch((err) => {
       Log.error(err, req);
       resp({
