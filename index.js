@@ -18,7 +18,8 @@ const entries = require('./entries.js');
     startServer(server);
   })
   .catch((err) => {
-    Log.error('Unable to connect to database. Exiting...');
+    Log.error(err);
+    console.error('Unable to connect to database. Exiting...');
     process.exit(1);
   });
 })();
