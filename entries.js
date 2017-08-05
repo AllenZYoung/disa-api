@@ -139,7 +139,8 @@ function getEntry(req, resp, id) {
           }
           code = 401;
         } else {
-          if ("" + result.meta.creator !== user.id) {
+          if (results.meta.stage === "Draft" && 
+              "" + result.meta.creator !== user.id) {
             response = {
               error: "You do not have access to someone else's drafts."
             }
