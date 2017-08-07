@@ -8,6 +8,6 @@ let uri = `mongodb://${username}:${password}@${databaseName}`;
 module.exports = {
   client: MongoClient,
   db: (function() {
-  return MongoClient.connect(uri);
+    return MongoClient.connect(uri);
   })()
 };
